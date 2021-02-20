@@ -49,12 +49,15 @@
                     <button class=" dropdown btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-shopping-cart"></i></button>
                         <ul class="dropdown-menu cart" aria-labelledby="dropdownMenuButton">
-                            <li><p class="dropdown-item text-center" style="color: #114B5F"> TV Samsung 49</p></li>
-                            <li><p class="dropdown-item text-center" style="color: #F45B69"> R$ 2999.00</p></li><hr>
-                            <li><p class="dropdown-item text-center" style="color: #114B5F"> TV Samsung 49</p></li>
-                            <li><p class="dropdown-item text-center" style="color: #F45B69"> R$ 2999.00</p></li><hr>
+                            @if(Cart::count() > 0)
+                            @foreach (Cart::content() as $item)
+                            <li><p class="dropdown-item text-center" style="color: #114B5F"> {{$item->name}}</p></li>
+                            <li><p class="dropdown-item text-center" style="color: #F45B69"> R$ {{ number_format($item->model->price, 2, ',', '.') }}</p></li><hr>
+                            @endforeach	
                             <li class="text-center"><a href="{{ route('cart.index')}}"><button class="btn btn-success"><i class="fas fa-shopping-cart"></i> Ver carrinho</button></a></li>
+                            @else
                             <li><p class="dropdown-item text-center" href="#"><i class="fas fa-shopping-cart"></i> Carrinho vazio</p></li>
+                            @endif
                         </ul>
                         @if(Route::has('login'))
                         @auth

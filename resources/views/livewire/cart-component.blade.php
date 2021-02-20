@@ -14,11 +14,18 @@
             </div>
         </div>
     </section>
+    @if(Session::has('success_message'))
+		<div class="alert alert-success">
+		    {{ Session::get('success_message') }}
+		</div>
+	@endif
     <section>
-        <div class="container cart">
+        <div class="container cart ">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
+                    @if(Cart::count() > 0)
                     <h1 class="text-center">Carrinho de compras</h1>
+                    @foreach (Cart::content() as $item)
                     <table class="table mt-4">
                         <thead>
                           <tr>
@@ -35,24 +42,35 @@
                             <th>
                                 <img class="text-center" src="assets/img/product1.jpg" width="70">
                             </th>
-                            <td>TV</td>
-                            <td>R$ 949,00</td>
-                            <td>2</td>
-                            <td style="color: red">R$ 1898,00</td>
-                            <td><button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fas fa-trash"></i></button></td>
-                          </tr>
-                          <tr>
-                            <th>
-                                <img class="text-center" src="assets/img/product1.jpg" width="70">
-                            </th>
-                            <td>TV</td>
-                            <td>R$ 949,00</td>
-                            <td>2</td>
-                            <td style="color: red">R$ 1898,00</td>
-                            <td><button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fas fa-trash"></i></button></td>
+                            <td>{{ $item->name}}</td>
+                            <td>R$ {{ number_format($item->model->price, 2, ',', '.') }}</td>
+                            <td> <form action="">
+                                <div class="custom-quantity-input" data-max="120" pattern="[0-9]*">
+                                    <input type="text" name="product-quatity" value="{{$item->qty}}">
+                                    <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->rowId}}')">+</a>
+                                    <a class="btn btn-reduce" href="#" wire:click.prevent="decreaseQuantity('{{$item->rowId}}')">-</a>
+                                </div>
+                            </form>
+                            <td style="color: #F45B69">R$ {{ number_format($item->subtotal, 2, ',', '.') }}</td>
+                            <td><a href="" wire:click.prevent="destroy('{{$item->rowId}}')"><button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fas fa-trash"></i></button></a></td>
                           </tr>
                         </tbody>
                       </table>
+                      @endforeach                      
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container subtotal">
+            <div class="row">
+                <div class="col-md-12  text-end">
+                    <p><span class="title">TOTAL =</span><b class="index"> R$ {{Cart::subtotal()}}</b></p>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12  text-end">
+                    <a href="" wire:click.prevent="destroyAll()"><button class="btn btn-danger"> Limpar o carrinho</button></a>
                 </div>
             </div>
         </div>
@@ -86,5 +104,8 @@
                  </div>
             </div>
         </div>
+        @else
+			<p style="color: red">Sem itens no carrinho</p>
+	    @endif
     </section>
 </div>

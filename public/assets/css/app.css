@@ -336,9 +336,26 @@ background-color: #fff;
     font-size: 1.6em;
     color: #028090;
 }
+.cart input{
+    width:50px;
+}
+.cart button{
+    width:50px
+}
 .discount h1{
     font-size: 1.3em;
     color: #028090;
+}
+.subtotal p{
+    font-size: 1.3em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: gray;
+    color: #114B5F;
+}
+.subtotal p b{
+    margin-right: 2px;
+    color: #F45B69;
 }
 .footer{
     background-color: #114B5F;

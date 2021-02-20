@@ -21,11 +21,11 @@
                     <img src="{{ url(asset('assets/img/semimagem.png'))}}" width="300">
                 </div>
                 <div class="col-md-6 my-5">
-                    <h1 class="text-center">{{$product->name}}</h1><br>
+                    <h1 class="text-center ">{{$product->name}}</h1><br>
                     <p class="text-center">{{$product->about}}</p><br>
                     <div class="text-center price"> R$ {{ number_format($product->price, 2, ',', '.') }}</div><br>
                     <div class="btn_details text-center">
-                        <a href=""><button class="btn"><i class="fas fa-shopping-cart"></i> Adicionar no carrinho</button></a>
+                        <a href=""><button class="btn" wire:click.prevent="store({{$product->id}}, '{{$product->name}}',{{$product->price}})"><i class="fas fa-shopping-cart"></i> Adicionar no carrinho</button></a>
                     </div>
                 </div>
             </div>
